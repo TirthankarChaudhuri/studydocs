@@ -1,0 +1,65 @@
+---------------
+Spring notes:
+---------------
+
+@SpringBootApplication
+- This annotation is placed on the main application class under the root package
+- This root package helps for the component scan (@ComponentScan) - thru all the available packages
+- This annotation enables following three features:
+	Use auto configuration in Spring boot application (@EnableAutoConfiguration)
+	Use component scan (@ComponentScan)
+	Able to define extra configuration on its application.class (@Configuration)
+	
+@Import({ MyConfig.class, MyAnotherConfig.class })
+- used to explicitly import the config classes
+
+@Autowired
+- Used for constructor injection
+
+Spring boot autoconfiguration:
+	For auto configuration, Spring boot looks at
+	- Frameworks available on the CLASSPATH
+	- Existing configuration for the application
+	Based on these, Spring boot provides basic configuration needed to configure the application with these frameworks. 
+	All autoconfiguration logic is implemented in spring-boot-autoconfigure.jar.
+	Another important file inside spring-boot-autoconfigure.jar is /META-INF/spring.factories. 
+	This file lists all the auto configuration classes that should be enabled under the EnableAutoConfiguration key.
+
+	
+DEBUG logging:
+---------------
+You can turn on debug logging by adding a simple property value to application.properties. 
+In the example below, we are turning on Debug level for all logging from org.springframework package (and sub packages).
+
+	logging.level.org.springframework: DEBUG
+
+Spring Initializr: 	A simple tool with UI to create a varied range of spring-boot based applications.
+					It is accessed thru the link https://start.spring.io/
+	
+
+-------------------------
+Spring boot architecture:
+-------------------------
+The building blocks of Spring boot are:
+	- Spring Boot Starter Projects
+		Starters are a set of convenient dependency descriptors that you can include in your application. 
+		For example, if you want to get started using Spring and JPA for database access, just include the spring-boot-starter-data-jpa dependency 
+		in your project. And you are good to go.
+	- Spring Boot Starter Parent (spring-boot-dependencies is the parent of this)
+		Spring Boot Dependencies defines the default dependency management for all Spring Boot projects. 
+		If we would want to use a new version of a specific dependency, we can override the version by specifying a new property in the project pom.
+	- Auto configuration
+
+The most important feature of Spring is DI. DI helps to develop loosely coupled applications. These can easily be unit tested
+	
+--------------------
+Restart vs Reload
+--------------------
+The restart technology provided by Spring Boot works by using two classloaders. 
+	Classes that do not change (for example, those from third-party jars) are loaded into a base classloader. 
+	Classes that you are actively developing are loaded into a restart classloader. 
+
+	When the application is restarted, the restart classloader is thrown away and a new one is created. 
+	This approach means that application restarts are typically much faster than “cold starts”, since the base classloader is already available and populated.
+
+ 
